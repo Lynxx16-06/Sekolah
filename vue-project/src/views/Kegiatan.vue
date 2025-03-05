@@ -149,16 +149,16 @@
               </form>
   
               <!-- Product grid -->
-              <div class="lg:col-span-3">
+              <div class="lg:col-span-3 overflow-x-auto h-[800px]">
                 <main class="flex gap-5">
-                  <IPA />
+                    <Addkegiatan/>
                 </main>
                 <!-- IPS -->
                 <main class="my-5 flex gap-5">
-                  <IPS />
+                    
                 </main>
                 <main>
-                  <DATASISWA />
+                    <Kegiatan/>
                 </main>
               </div>
             </div>
@@ -186,9 +186,8 @@ import {
 } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/20/solid'
-import DATASISWA from '../components/DATASISWA.vue'
-import IPA from '../components/IPA.vue'
-import IPS from '../components/IPS.vue'
+import Kegiatan from '../components/Kegiatan.vue'
+import Addkegiatan from '../components/Addkegiatan.vue'
 
 export default {
   components: {
@@ -209,9 +208,8 @@ export default {
     MinusIcon,
     PlusIcon,
     Squares2X2Icon,
-    DATASISWA,
-    IPA,
-    IPS,
+    Kegiatan,
+    Addkegiatan,
   },
   data() {
     return {

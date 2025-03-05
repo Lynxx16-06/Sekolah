@@ -25,6 +25,21 @@ const router = createRouter({
       component: () => import('../views/Admin.vue'),
     },
     {
+      path: '/kegiatan',
+      name: 'kegiatan',
+      component: () => import('../views/Kegiatan.vue'),
+    },
+    {
+      path: '/daftarsiswa',
+      name: 'daftarsiswa',
+      component: () => import('../views/DaftarSiswa.vue'),
+    },
+    {
+      path: '/kelas10',
+      name: 'kelas10',
+      component: () => import('../views/Kelas10.vue'),
+    },
+    {
       path: '/:pathWacht(.*)*',
       name: 'not-found',
       component: () => import('../views/404.vue'),

@@ -64,7 +64,7 @@
   
         <main class="w-full px-4 sm:px-6 lg:px-8">
           <div class="flex items-baseline justify-between border-b border-gray-200 pt-10 pb-10">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900">Admin Dashboard</h1>
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900">Kelas 10</h1>
   
             <div class="flex items-center">
               <Menu as="div" class="relative inline-block text-left">
@@ -149,16 +149,17 @@
               </form>
   
               <!-- Product grid -->
-              <div class="lg:col-span-3">
-                <main class="flex gap-5">
-                  <IPA />
+              <div class="lg:col-span-3 overflow-x-auto h-[800px]">
+                <main class="flex justify-between px-5 gap-5">
+                    <!-- <Addkegiatan/> -->
+                    <!-- <DaftarSiswa/> -->
                 </main>
                 <!-- IPS -->
                 <main class="my-5 flex gap-5">
-                  <IPS />
+                    
                 </main>
                 <main>
-                  <DATASISWA />
+                    <Kegiatan/>
                 </main>
               </div>
             </div>
@@ -170,7 +171,6 @@
   </template>
   
   <script>
-import { ref } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -186,9 +186,9 @@ import {
 } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/20/solid'
-import DATASISWA from '../components/DATASISWA.vue'
-import IPA from '../components/IPA.vue'
-import IPS from '../components/IPS.vue'
+import Kegiatan from '../components/Kegiatan.vue'
+import DaftarSiswa from '../components/DaftarSiswa.vue'
+import Addkegiatan from '../components/Addkegiatan.vue'
 
 export default {
   components: {
@@ -209,9 +209,9 @@ export default {
     MinusIcon,
     PlusIcon,
     Squares2X2Icon,
-    DATASISWA,
-    IPA,
-    IPS,
+    Kegiatan,
+    Addkegiatan,
+    DaftarSiswa,
   },
   data() {
     return {
@@ -234,7 +234,7 @@ export default {
           id: 'color',
           name: 'Jurusan',
           options: [
-            { value: 'mipa', label: 'MIPA', checked: false, href: '/' },
+            { value: 'mipa', label: 'MIPA', checked: false, href: '/mipa' },
             { value: 'ips', label: 'IPS', checked: false, href: '#' },
             { value: 'sains', label: 'SAINS & TEKNOLOGI', checked: false, href: '#' },
           ],
