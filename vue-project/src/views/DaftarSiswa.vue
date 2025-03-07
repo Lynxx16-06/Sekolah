@@ -159,7 +159,8 @@
                     
                 </main>
                 <main>
-                    <Kegiatan/>
+                    <!-- <Kegiatan/> -->
+                     <Siswa/>
                 </main>
               </div>
             </div>
@@ -190,6 +191,7 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import Kegiatan from '../components/Kegiatan.vue'
 import DaftarSiswa from '../components/DaftarSiswa.vue'
 import Addkegiatan from '../components/Addkegiatan.vue'
+import Siswa from '../components/Siswa.vue'
 
 export default {
   components: {
@@ -213,6 +215,8 @@ export default {
     Kegiatan,
     Addkegiatan,
     DaftarSiswa,
+    Addkegiatan,
+    Siswa,
   },
   data() {
     return {
