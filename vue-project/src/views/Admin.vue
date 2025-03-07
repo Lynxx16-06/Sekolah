@@ -144,7 +144,7 @@
                   </DisclosurePanel>
                 </Disclosure>
                 <div class="absolute bottom-5">
-                    <button class="bg-blue-400 px-5 py-2 rounded-lg text-white">Kembali</button>
+                    <a href="/" class="bg-blue-400 px-5 py-2 rounded-lg text-white">Kembali</a>
                 </div>
               </form>
   

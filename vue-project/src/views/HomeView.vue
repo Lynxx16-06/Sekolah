@@ -15,7 +15,7 @@
                     </div>
                     <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                       <div class="flex shrink-0 items-center">
-                        <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+                        <img class="h-10 w-20" src="../assets/img/Cuplikan layar 2025-03-07 122252_transparent_Craiyon.png" alt="Your Company" />
                       </div>
                       <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
@@ -36,7 +36,7 @@
                           <MenuButton class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
                             <span class="absolute -inset-1.5" />
                             <span class="sr-only">Open user menu</span>
-                            <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                            <img class="size-8 rounded-full object-cover" src="../assets/img/img2.avif" alt="" />
                           </MenuButton>
                         </div>
                         <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -46,6 +46,9 @@
                             </MenuItem>
                             <MenuItem v-slot="{ active }">
                               <a href="#" :class="[active ? 'bg-gray-100 outline-hidden' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
+                            </MenuItem>
+                            <MenuItem v-slot="{ active }">
+                              <a href="/admin" :class="[active ? 'bg-gray-100 outline-hidden' : '', 'block px-4 py-2 text-sm text-gray-700']">Login Admin</a>
                             </MenuItem>
                             <MenuItem v-slot="{ active }">
                               <a href="#" :class="[active ? 'bg-gray-100 outline-hidden' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out</a>
@@ -192,13 +195,13 @@
      </section>
 
      <!-- Content Kegiatan -->
-     <section class="hidden md:block mt-20" id="kegiatan">
+     <section class="md:block mt-20" id="kegiatan">
         <div class="flex items-center ml-20">
             <div class="border border-black w-15"></div>
             <h1 class="font-bold rounded-full border inline-flex px-5 py-2 ml-3">Kegiatan</h1>
         </div>
 
-            <div class="flex gap-10 ml-10  mt-5 mb-10">
+            <div class="md:flex block gap-10 md:ml-10 md:p-0 p-3 mt-5 mb-10">
                 <div class="flex flex-col gap-5">
                     <div v-for="item in content" :key="item" class="flex gap-10 items-center text-justify">
                         <img class="w-40 h-40 object-cover" :src="item.src" alt="">
@@ -206,12 +209,12 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-5">
-                    <div v-for="item in content" :key="item" class="flex gap-10 items-center text-justify">
+                    <div v-for="item in content2" :key="item" class="flex gap-10 items-center text-justify">
                         <img class="w-40 h-40 object-cover" :src="item.src" alt="">
                         <h1 class="font-light text-md w-80">{{ item.isi }}</h1>
                     </div>
                 </div>
-                <div class="border border-gray-400"></div>
+                <div class="border border-gray-400 md:mt-0 mt-5"></div>
                 <div>
                     <h1 class="my-5 text-2xl font-bold">Kegiatan Yang Akan Berlangsung</h1>
                     <div class="flex flex-col gap-5"> 
@@ -222,20 +225,74 @@
                     </div>
                 </div>
             </div>
-        <div>
-
-        </div>
      </section>
+
+     <!-- Content Kalender -->
+      <section id="kalender">
+          <div class="flex flex-col md:flex-row h-200 p-4 bg-gray-100" >
+            <!-- Sidebar -->
+            <div class="w-full md:w-1/4 p-4 bg-white shadow-lg rounded-lg mb-4 md:mb-0 md:h-190 mr-1">
+              <h2 class="text-lg font-bold">{{ monthNames[currentMonth] }}</h2>
+              <div class="grid grid-cols-7 gap-1 mt-4 text-center">
+                <span v-for="day in days" :key="day" class="font-bold text-gray-600">{{ day }}</span>
+                <button v-for="date in dates" :key="date" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-blue-300" :class="{'bg-blue-500 text-white': selectedDate === date}" @click="selectDate(date)">
+                  {{ date }}
+                </button>
+              </div>
+              <div class="mt-4">
+                <h3 class="font-semibold mb-2">Today's Events</h3>
+                <ul>
+                  <li v-for="event in filteredEvents" :key="event.id" class="p-2 border-b text-gray-700">
+                    {{ event.title }} - {{ event.time }}
+                  </li>
+                </ul>
+              </div>
+              <!-- Add Event Form -->
+              <div class="mt-4">
+                <h3 class="font-semibold mb-2">Add Event</h3>
+                <input v-model="newEvent.title" type="text" placeholder="Event Title" class="w-full p-2 border rounded mb-2">
+                <input v-model="newEvent.time" type="text" placeholder="Time (e.g. 3:00 PM)" class="w-full p-2 border rounded mb-2">
+                <button @click="addEvent" class="w-full bg-blue-500 text-white p-2 rounded">Add Event</button>
+              </div>
+            </div>
+            
+            <!-- Main Calendar -->
+            <div class="w-full md:w-3/4 p-4 md:h-190 bg-white shadow-lg rounded-lg">
+              <div class="flex justify-between items-center">
+                <button @click="prevMonth" class="px-4 py-2 bg-gray-200 rounded-lg">&lt;</button>
+                <h1 class="text-2xl font-bold">{{ monthNames[currentMonth] }}</h1>
+                <button @click="nextMonth" class="px-4 py-2 bg-gray-200 rounded-lg">&gt;</button>
+              </div>
+              <div class="grid grid-cols-7 gap-2 mt-4 text-center text-gray-600">
+                <span v-for="day in days" :key="day" class="font-bold">{{ day }}</span>
+                <div v-for="date in dates" :key="date" class="md:p-4 p-2 border rounded-lg h-10 md:h-24 relative text-gray-700" @click="selectDate(date)">
+                  <span class="absolute top-1 left-1">{{ date }}</span>
+                  <div v-for="event in events.filter(e => e.date === date && e.month === currentMonth)" :key="event.id" class="absolute bottom-1 left-1 text-xs bg-blue-500 text-white px-2 py-1 rounded">
+                    {{ event.title }}
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="ml-1 h-190 p-4 bg-white shadow-lg rounded-lg w-full md:w-120" >
+                <h3 class="text-lg font-bold mb-2">Upcoming Events</h3>
+                <ul>
+                  <li v-for="event in upcomingEvents" :key="event.id" class="p-5 text-gray-700 bg-blue-400 gap-10 mb-2 flex hover:bg-blue-300 cursor-pointer">
+                    {{ event.title }} - {{ event.time }} ({{ monthNames[event.month] }} {{ event.date }})
+                  </li>
+                </ul>
+              </div>
+          </div>
+      </section>
 </template>
 
 <script>
-import CRUD from '../components/CRUD.vue'
 import Kegiatan from '../components/kegiatansiswa.vue';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios';
 export default {
-  components : { CRUD, Kegiatan, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Bars3Icon, BellIcon, XMarkIcon},
+  components : { Kegiatan, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Bars3Icon, BellIcon, XMarkIcon},
   data() {
     return {
         isSelect: '',
@@ -245,7 +302,25 @@ export default {
         autoplayInterval: null,
         navbar: '',
         users: [],
+        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        currentMonth: new Date().getMonth(),
+        selectedDate: null,
+        events: [
+          { id: 1, title: 'Upacara', time: '3:00 PM', date: 2, month: 3 },
+          { id: 2, title: 'Discovery Meeting', time: '10:00 AM', date: 23, month: 3 },
+          { id: 3, title: 'Plan website', time: '2 hours', date: 20, month: 3 }
+        ],
+        newEvent: {
+          title: '',
+          time: ''
+        },
         content: [
+            {src: 'https://images.unsplash.com/photo-1605507048708-0616d21f35e5?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isi: 'Bersemangatlah Menuntut Ilmu, Raih Prestasi, dan Jadilah Generasi yang Membanggakan Keluarga dan Bangsa!'},
+            {src: 'https://images.unsplash.com/photo-1640480920935-c9d02c060d1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isi: 'Sekolah adalah Tempat Kami Berkarya: Berpikir Kritis, Berkreativitas, dan Membangun Jiwa Kolaborasi untuk Masa Depan Gemilang!'},
+            {src: 'https://images.unsplash.com/photo-1640480920935-c9d02c060d1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isi: 'Dari Ruang Kelas ke Kehidupan Nyata: Ilmu yang Bermanfaat, Akhlak yang Mulia, dan Semangat Pantang Menyerah!'},
+        ],
+        content2: [
             {src: 'https://images.unsplash.com/photo-1605507048708-0616d21f35e5?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isi: 'Bersemangatlah Menuntut Ilmu, Raih Prestasi, dan Jadilah Generasi yang Membanggakan Keluarga dan Bangsa!'},
             {src: 'https://images.unsplash.com/photo-1640480920935-c9d02c060d1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isi: 'Sekolah adalah Tempat Kami Berkarya: Berpikir Kritis, Berkreativitas, dan Membangun Jiwa Kolaborasi untuk Masa Depan Gemilang!'},
             {src: 'https://images.unsplash.com/photo-1640480920935-c9d02c060d1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', isi: 'Dari Ruang Kelas ke Kehidupan Nyata: Ilmu yang Bermanfaat, Akhlak yang Mulia, dan Semangat Pantang Menyerah!'},
@@ -254,7 +329,7 @@ export default {
             { name: 'Home', href: '#', current: true },
             { name: 'About', href: '#about', current: false },
             { name: 'Kegiatan', href: '#kegiatan', current: false },
-            { name: 'Calendar', href: '#', current: false },
+            { name: 'Calendar', href: '#kalender', current: false },
         ],
         images: [
         {
@@ -295,7 +370,40 @@ export default {
         ],
     }
   },
+  computed: {
+    dates() {
+      return Array.from({ length: 30 }, (_, i) => i + 1);
+    },
+    filteredEvents() {
+      return this.selectedDate ? this.events.filter(event => event.date === this.selectedDate && event.month === this.currentMonth) : [];
+    },
+    upcomingEvents() {
+      return this.events.filter(event => event.month >= this.currentMonth);
+    }
+  },
   methods: {
+    selectDate(date) {
+      this.selectedDate = date;
+    },
+    prevMonth() {
+      this.currentMonth = this.currentMonth === 0 ? 11 : this.currentMonth - 1;
+    },
+    nextMonth() {
+      this.currentMonth = this.currentMonth === 11 ? 0 : this.currentMonth + 1;
+    },
+    addEvent() {
+      if (this.newEvent.title && this.newEvent.time && this.selectedDate) {
+        this.events.push({
+          id: this.events.length + 1,
+          title: this.newEvent.title,
+          time: this.newEvent.time,
+          date: this.selectedDate,
+          month: this.currentMonth
+        });
+        this.newEvent.title = '';
+        this.newEvent.time = '';
+      }
+    },
     openSelected() {
         this.isSelect = !this.isSelect;
     },
