@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import('../views/Admin.vue'),
     },
     {
+      path: '/loginadmin',
+      name: 'loginadmin',
+      component: () => import('../views/LoginPage.vue'),
+    },
+    {
       path: '/kegiatan',
       name: 'kegiatan',
       component: () => import('../views/Kegiatan.vue'),
